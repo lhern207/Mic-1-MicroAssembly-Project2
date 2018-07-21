@@ -1,0 +1,44 @@
+
+The Level-2 instruction formats are:
+
+ROT	// rotate: Pop two words from stack as
+	//	RotationCount:   m[SP]
+	//	ValueToBeRotated: m[SP-1]
+	// and push the rotated value on the stack m[SP-1]
+
+ADDD	// integer double word addition: 
+	//	Pop two double words (top four values) from the stack as 
+	//		B_Low = m[SP], B_High = m[SP - 1],
+	//		A_Low = m[SP - 2], A_High = m[SP - 3]
+	//	Perform addition on A_Low and B_Low, and propagate the carry
+	//	  to the addition result of A_High and B_High
+	//	Push the result as
+	//		m[SP - 2] = Result_Low
+	//		m[SP - 3] = Result_High
+
+OUTBIN // Pop a word from the stack and print the binary values of the word
+	//  from MSB to LSB as groups of 8 bits with one space between groups.
+	// e.g.  11111111 11111111 11111111 11111111
+
+where m stands for the main memory (one dimensional array).
+
+
+Algorithm for ROT 
+-----------------
+
+  ROT
+  ---
+
+    The MSB is the leftmost bit at position 31 and
+    the LSB is the rightmost bit at position 0.
+   
+    Let the absolute value in RotationCount is n. (i.e. |RotationCount|  = n)
+    If ( RotationCount > 0 )
+      then
+	    { rotate ValueToBeRotated by n bits to the right
+            and push the rotated value on the stack }
+      else
+	    { rotate ValueToBeRotated by n bits to the left
+	      and push the rotated value on the stack }
+
+ 
